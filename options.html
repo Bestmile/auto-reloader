@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BestMile auto-refresh extension options</title>
+  <style type="text/css">
+    input[type="number"] {
+      width: 3.5em;
+    }
+    input[type="text"] {
+      width: 6em;
+    }
+    button {
+      margin: .5em;
+      position: absolute;
+      right: 1em;
+      bottom: 1em;
+    }
+    h3 {
+      margin-top: 1.5em;
+    }
+    h5 {
+      display: inline-block;
+      margin: 0 0 1em .5em;
+    }
+    #status {
+      color: lime;
+      margin: 1em 0;
+    }
+    .large_input {
+      width: 14em !important;
+    }
+    .options {
+      min-width: 40em;
+      min-height: 35em;
+    }
+    .form_input {
+      margin: .5em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="options">
+    <h3>URL</h3>
+    <div class="form_input">
+      <input type="text" id="run_url" class="large_input" />
+      <label for="run_url">
+        Will only refresh the tab(s) matching this (partial) URL.
+      </label>
+    </div>
+    <h3>Dialog</h3>
+    <div class="form_input">
+      <input type="text" id="confirm_dialog_name" class="large_input" />
+      <label for="confirm_dialog_name">
+        Name of the confirm dialog shown before a refresh.
+      </label>
+    </div>
+    <h3>Normal reload delays</h3>
+    <h5>Durations are in seconds. Setting a delay to 0 disables the corresponding reload.</h5>
+    <div class="form_input">
+      <input type="number" id="inactivity_timeout" />
+      <label for="inactivity_timeout">
+        Inactivity duration before showing the reset dialog.
+      </label>
+    </div>
+    <div class="form_input">
+      <input type="number" id="reset_modal_timeout" />
+      <label for="reset_modal_timeout">
+        Delay before the reset modal auto-confirms.
+      </label>
+    </div>
+    <div class="form_input">
+      <input type="number" id="force_reload_timeout" />
+      <label for="force_reload_timeout">
+        Inactivity duration before reloading the page without confirmation.
+      </label>
+    </div>
+
+    <h3>Page load error handling</h3>
+    <div class="form_input">
+      <input type="text" id="load_check_class" />
+      <label for="load_check_class">
+        CSS class used to check if the page loaded completely.
+      </label>
+    </div>
+    <div class="form_input">
+      <input type="number" id="incomplete_load_timeout" />
+      <label for="incomplete_load_timeout">
+        Delay before forcing a reload if the above class isn't found.
+      </label>
+    </div>
+
+    <div id="status"></div>
+    <button id="save">Save</button>
+  </div>
+  <script src="js/options.js"></script>
+</body>
+</html>

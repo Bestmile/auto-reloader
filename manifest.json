@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "name": "BestMile auto-reloader",
+  "description": "Refresh matching tab(s) after a period of inactivity.",
+  "version": "1.0",
+  "homepage_url": "https://github.com/BestMile/auto-reloader",
+  "minimum_chrome_version": "50",
+  "permissions": [
+    "storage",
+    "tabs",
+    "http://*/", "https://*/"
+  ],
+  "background": {
+    "scripts": [ "js/background.js" ],
+    "persistent": false
+  },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  }
+}
