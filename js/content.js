@@ -8,8 +8,14 @@ chrome.storage.local.get({
   forceReloadTimeout:             900,
   reloadTimeoutOnIncompleteLoad:  30,
   loadCheckClass:                 'App',
-  confirmDialogName:              'resetDialog'
+  confirmDialogName:              'resetDialog',
+  runURL:                         ''
 }, function(options) {
+  if (!options.runURL || options.runURL.length === 0 || location.href.indexOf(options.runURL) < 0) {
+    // disables the reload logic if the configured target is empty or doesn't match the current url
+    return;
+  }
+
   inactivityTimeout             = options.inactivityTimeout;
   resetModalTimeout             = options.resetModalTimeout;
   forceReloadTimeout            = options.forceReloadTimeout;

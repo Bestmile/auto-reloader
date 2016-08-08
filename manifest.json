@@ -6,14 +6,14 @@
   "homepage_url": "https://github.com/BestMile/auto-reloader",
   "minimum_chrome_version": "50",
   "permissions": [
-    "storage",
-    "tabs",
-    "http://*/", "https://*/"
+    "storage"
   ],
-  "background": {
-    "scripts": [ "js/background.js" ],
-    "persistent": false
-  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [ "js/content.js" ]
+    }
+  ],
   "options_ui": {
     "page": "options.html",
     "chrome_style": true
