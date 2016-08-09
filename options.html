@@ -16,11 +16,15 @@
       bottom: 1em;
     }
     h3 {
-      margin-top: 1.5em;
+      margin-top: 1em;
+      margin-bottom: 0.5em;
+    }
+    h3:first-child {
+      margin-top: 0;
     }
     h5 {
       display: inline-block;
-      margin: 0 0 1em .5em;
+      margin: 0 0 .75em .25em;
     }
     #status {
       color: lime;
@@ -30,11 +34,14 @@
       width: 14em !important;
     }
     .options {
-      min-width: 40em;
-      min-height: 35em;
+      width: 40em;
+      height: 40em;
     }
     .form_input {
-      margin: .5em;
+      margin: .25em;
+    }
+    .impact {
+      color: red;
     }
   </style>
 </head>
@@ -90,6 +97,21 @@
       </label>
     </div>
 
+    <h3>Heartbeat</h3>
+    <h5>This extension can send a heartbeat post to the URL below each time a refresh is performed.<br/>
+        <span class="impact">Leaving the URL blank will disable posting.</span></h5>
+    <div class="form_input">
+      <input type="text" id="heartbeat_url" class="large_input" />
+      <label for="heartbeat_url">
+        Heartbeat URL. <span class="impact">HTTPS required to prevent errors</span>
+      </label>
+    </div>
+    <div class="form_input">
+      <input type="text" id="heartbeat_name" class="large_input"  />
+      <label for="heartbeat_name">
+        The name to use in heartbeat posts.
+      </label>
+    </div>
     <div id="status"></div>
     <button id="save">Save</button>
   </div>

@@ -9,7 +9,9 @@ chrome.storage.local.get({
   reloadTimeoutOnIncompleteLoad:  30,
   loadCheckClass:                 'App',
   confirmDialogName:              'resetDialog',
-  runURL:                         ''
+  runURL:                         '',
+  heartbeatURL:                   '',
+  heartbeatName:                  ''
 }, function(options) {
   if (!options.runURL || options.runURL.length === 0 || location.href.indexOf(options.runURL) < 0) {
     // disables the reload logic if the configured target is empty or doesn't match the current url
@@ -23,6 +25,14 @@ chrome.storage.local.get({
 
   app                           = document.getElementsByClassName(options.loadCheckClass)[0];
   resetDialog                   = document.getElementById(options.confirmDialogName);
+
+  // call the specified heartbeat endpoint on each reload
+  if (options.heartbeatURL.length > 0) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', options.heartbeatURL, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({"name": options.heartbeatName, "loaded": !!app}));
+  }
 
   assignTimeouts();
 });

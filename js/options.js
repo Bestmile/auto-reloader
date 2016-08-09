@@ -6,7 +6,9 @@ function save_options() {
     reloadTimeoutOnIncompleteLoad:  document.getElementById('incomplete_load_timeout').value,
     loadCheckClass:                 document.getElementById('load_check_class').value,
     confirmDialogName:              document.getElementById('confirm_dialog_name').value,
-    runURL:                         document.getElementById('run_url').value
+    runURL:                         document.getElementById('run_url').value,
+    heartbeatURL:                   document.getElementById('heartbeat_url').value,
+    heartbeatName:                  document.getElementById('heartbeat_name').value
   }, function() {
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
@@ -25,7 +27,9 @@ function restore_options() {
     reloadTimeoutOnIncompleteLoad:  30,
     loadCheckClass:                 'App',
     confirmDialogName:              'resetDialog',
-    runURL:                         ''
+    runURL:                         '',
+    heartbeatURL:                   '',
+    heartbeatName:                  ''
   }, function(options) {
     document.getElementById('inactivity_timeout').value       = options.inactivityTimeout;
     document.getElementById('reset_modal_timeout').value      = options.resetModalTimeout;
@@ -34,6 +38,8 @@ function restore_options() {
     document.getElementById('load_check_class').value         = options.loadCheckClass;
     document.getElementById('run_url').value                  = options.runURL;
     document.getElementById('confirm_dialog_name').value      = options.confirmDialogName;
+    document.getElementById('heartbeat_url').value            = options.heartbeatURL;
+    document.getElementById('heartbeat_name').value           = options.heartbeatName;
   });
 }
 
