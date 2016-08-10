@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Auto Reloader",
   "description": "Refresh matching tab(s) after a period of inactivity.",
-  "version": "1.2",
+  "version": "1.3",
   "homepage_url": "https://github.com/BestMile/auto-reloader",
   "minimum_chrome_version": "50",
   "permissions": [
