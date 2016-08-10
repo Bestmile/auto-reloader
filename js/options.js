@@ -1,14 +1,14 @@
 function save_options() {
   chrome.storage.local.set({
-    inactivityTimeout:              document.getElementById('inactivity_timeout').value,
-    resetModalTimeout:              document.getElementById('reset_modal_timeout').value,
-    forceReloadTimeout:             document.getElementById('force_reload_timeout').value,
-    reloadTimeoutOnIncompleteLoad:  document.getElementById('incomplete_load_timeout').value,
-    loadCheckClass:                 document.getElementById('load_check_class').value,
-    confirmDialogName:              document.getElementById('confirm_dialog_name').value,
-    runURL:                         document.getElementById('run_url').value,
-    heartbeatURL:                   document.getElementById('heartbeat_url').value,
-    heartbeatName:                  document.getElementById('heartbeat_name').value
+    inactivityTimeout:             document.getElementById('inactivity_timeout').value,
+    resetModalTimeout:             document.getElementById('reset_modal_timeout').value,
+    forceReloadTimeout:            document.getElementById('force_reload_timeout').value,
+    reloadTimeoutOnIncompleteLoad: document.getElementById('incomplete_load_timeout').value,
+    loadCheckClass:                document.getElementById('load_check_class').value,
+    confirmDialogName:             document.getElementById('confirm_dialog_name').value,
+    runURL:                        document.getElementById('run_url').value,
+    heartbeatURL:                  document.getElementById('heartbeat_url').value,
+    heartbeatName:                 document.getElementById('heartbeat_name').value,
   }, function() {
     // Update status to let user know options were saved.
     var status = document.getElementById('status');

@@ -33,6 +33,9 @@
     .large_input {
       width: 14em !important;
     }
+    .xlarge_input {
+      width: 20em !important;
+    }
     .options {
       width: 40em;
       height: 40em;
@@ -43,28 +46,29 @@
     .impact {
       color: red;
     }
+    .spaced {
+      margin-top: 1em;
+    }
   </style>
 </head>
 
 <body>
   <div class="options">
-    <h3>URL</h3>
+    <h3>Options</h3>
+    <h5>All durations are in seconds. Setting a delay to 0 disables the corresponding reload.</h5>
     <div class="form_input">
-      <input type="text" id="run_url" class="large_input" />
+      <input type="text" id="run_url" class="xlarge_input" />
       <label for="run_url">
-        Will only refresh the tab(s) matching this (partial) URL.
+        Refresh tab(s) matching this (partial) URL.
       </label>
     </div>
-    <h3>Dialog</h3>
     <div class="form_input">
       <input type="text" id="confirm_dialog_name" class="large_input" />
       <label for="confirm_dialog_name">
         Name of the confirm dialog shown before a refresh.
       </label>
     </div>
-    <h3>Normal reload delays</h3>
-    <h5>Durations are in seconds. Setting a delay to 0 disables the corresponding reload.</h5>
-    <div class="form_input">
+    <div class="form_input spaced">
       <input type="number" id="inactivity_timeout" />
       <label for="inactivity_timeout">
         Inactivity duration before showing the reset dialog.
@@ -101,9 +105,9 @@
     <h5>This extension can send a heartbeat post to the URL below each time a refresh is performed.<br/>
         <span class="impact">Leaving the URL blank will disable posting.</span></h5>
     <div class="form_input">
-      <input type="text" id="heartbeat_url" class="large_input" />
+      <input type="text" id="heartbeat_url" class="xlarge_input" />
       <label for="heartbeat_url">
-        Heartbeat URL. <span class="impact">HTTPS required to prevent errors</span>
+        Post URL. <span class="impact">HTTPS recommended</span>
       </label>
     </div>
     <div class="form_input">

@@ -1,6 +1,7 @@
-var inactivityTimeout, resetModalTimeout, forceReloadTimeout, reloadTimeoutOnIncompleteLoad;
-var timeoutDisplayResetDialog, timeoutReload;
+var config, timeoutDisplayResetDialog, timeoutReload, heartbeatInterval;
 var app, resetDialog;
+
+var lastRefresh = new Date();
 
 chrome.storage.local.get({
   inactivityTimeout:              120,
@@ -14,28 +15,31 @@ chrome.storage.local.get({
   heartbeatName:                  ''
 }, function(options) {
   if (!options.runURL || options.runURL.length === 0 || location.href.indexOf(options.runURL) < 0) {
-    // disables the reload logic if the configured target is empty or doesn't match the current url
-    return;
+    return; // disables the reload logic if the configured target is empty or doesn't match the current url
   }
 
-  inactivityTimeout             = options.inactivityTimeout;
-  resetModalTimeout             = options.resetModalTimeout;
-  forceReloadTimeout            = options.forceReloadTimeout;
-  reloadTimeoutOnIncompleteLoad = options.reloadTimeoutOnIncompleteLoad;
-
-  app                           = document.getElementsByClassName(options.loadCheckClass)[0];
-  resetDialog                   = document.getElementById(options.confirmDialogName);
-
-  // call the specified heartbeat endpoint on each reload
-  if (options.heartbeatURL.length > 0) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', options.heartbeatURL, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({"name": options.heartbeatName, "loaded": !!app}));
-  }
+  app         = document.getElementsByClassName(options.loadCheckClass)[0];
+  resetDialog = document.getElementById(options.confirmDialogName);
+  config      = options;
 
   assignTimeouts();
+  sendHeartbeat();
 });
+
+var sendHeartbeat = function() {
+  if (config.heartbeatURL.length > 0) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', config.heartbeatURL, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+      "name": config.heartbeatName,
+      "loaded": !!app,
+      "options": config,
+      "URL": location.href,
+      "lastRefresh": lastRefresh
+    }));
+  }
+}
 
 var reload = function() {
   location.reload();
@@ -50,18 +54,18 @@ var onDialogDelayBeforeResetTimeout = function() {
 
 var onReloadDialogTimeout = function() {
   clearTimeout(timeoutDisplayResetDialog);
-  if (resetDialog && resetModalTimeout > 0 ) {
+  if (resetDialog && config.resetModalTimeout > 0 ) {
     resetDialog.style.visibility = 'visible';
-    timeoutReload = setTimeout(onDialogDelayBeforeResetTimeout, resetModalTimeout * 1000);
+    timeoutReload = setTimeout(onDialogDelayBeforeResetTimeout, config.resetModalTimeout * 1000);
   } else {
-    // skips displaying the reset dialong if the latter is undefined or the timeout set to 0 and reloads immediately
+    // skips displaying the reset dialog if the latter is undefined or the timeout set to 0 and reloads immediately
     reload();
   }
 }
 
 var resetReloadDialogTimer = function() {
   clearTimeout(timeoutDisplayResetDialog);
-  timeoutDisplayResetDialog = setTimeout(onReloadDialogTimeout, inactivityTimeout * 1000);
+  timeoutDisplayResetDialog = setTimeout(onReloadDialogTimeout, config.inactivityTimeout * 1000);
 }
 
 var assignTimeouts = function() {
@@ -70,13 +74,13 @@ var assignTimeouts = function() {
     app.onmousedown = resetReloadDialogTimer;
     app.ontouchend = resetReloadDialogTimer;
     // after x minutes of inactivity, the page will be reloaded to load updates and prevent errors
-    if (forceReloadTimeout > 0) {
-      timeoutDisplayResetDialog = setTimeout(reload, forceReloadTimeout * 1000);
+    if (config.forceReloadTimeout > 0) {
+      timeoutDisplayResetDialog = setTimeout(reload, config.forceReloadTimeout * 1000);
     }
   } else {
     // the page did not load be completely, the script will force a reload after a few seconds
-    if (reloadTimeoutOnIncompleteLoad > 0) {
-      timeoutDisplayResetDialog = setTimeout(reload, reloadTimeoutOnIncompleteLoad * 1000);
+    if (config.reloadTimeoutOnIncompleteLoad > 0) {
+      timeoutDisplayResetDialog = setTimeout(reload, config.reloadTimeoutOnIncompleteLoad * 1000);
     }
   }
 }
