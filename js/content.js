@@ -12,7 +12,8 @@ chrome.storage.local.get({
   confirmDialogName:              'resetDialog',
   runURL:                         '',
   heartbeatURL:                   '',
-  heartbeatName:                  ''
+  heartbeatName:                  '',
+  heartbeatInterval:              60
 }, function(options) {
   if (!options.runURL || options.runURL.length === 0 || location.href.indexOf(options.runURL) < 0) {
     return; // disables the reload logic if the configured target is empty or doesn't match the current url
@@ -42,6 +43,7 @@ var sendHeartbeat = function() {
 }
 
 var reload = function() {
+  clearInterval(heartbeatInterval);
   location.reload();
 }
 
@@ -82,5 +84,9 @@ var assignTimeouts = function() {
     if (config.reloadTimeoutOnIncompleteLoad > 0) {
       timeoutDisplayResetDialog = setTimeout(reload, config.reloadTimeoutOnIncompleteLoad * 1000);
     }
+  }
+  // calls the specified heartbeat endpoint regularly after a given interval
+  if (config.heartbeatInterval > 0) {
+    heartbeatInterval = setInterval(sendHeartbeat, config.heartbeatInterval * 1000);
   }
 }

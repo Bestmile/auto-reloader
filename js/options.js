@@ -9,6 +9,7 @@ function save_options() {
     runURL:                        document.getElementById('run_url').value,
     heartbeatURL:                  document.getElementById('heartbeat_url').value,
     heartbeatName:                 document.getElementById('heartbeat_name').value,
+    heartbeatInterval:             document.getElementById('heartbeat_interval').value
   }, function() {
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
@@ -29,7 +30,8 @@ function restore_options() {
     confirmDialogName:              'resetDialog',
     runURL:                         '',
     heartbeatURL:                   '',
-    heartbeatName:                  ''
+    heartbeatName:                  '',
+    heartbeatInterval:              60
   }, function(options) {
     document.getElementById('inactivity_timeout').value       = options.inactivityTimeout;
     document.getElementById('reset_modal_timeout').value      = options.resetModalTimeout;
@@ -40,6 +42,7 @@ function restore_options() {
     document.getElementById('confirm_dialog_name').value      = options.confirmDialogName;
     document.getElementById('heartbeat_url').value            = options.heartbeatURL;
     document.getElementById('heartbeat_name').value           = options.heartbeatName;
+    document.getElementById('heartbeat_interval').value       = options.heartbeatInterval;
   });
 }
 
